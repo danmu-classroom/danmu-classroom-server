@@ -16,9 +16,7 @@ class Room < ApplicationRecord
   end
 
   def setup_redis_channel
-    host = ENV.fetch('REDIS_HOST') { 'localhost' }
-    port = ENV.fetch('REDIS_PORT') { 6379 }
-    self.redis = "#{host}:#{port}"
+    self.redis = ENV['REDIS_URL']
     self.channel = "#{self.key}_#{created_at.to_i}"
   end
 
