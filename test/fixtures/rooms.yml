@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  key: MyString
+  ip: MyString
+  redis: MyString
+  channel: MyString
+  online: false
+
+two:
+  key: MyString
+  ip: MyString
+  redis: MyString
+  channel: MyString
+  online: false
