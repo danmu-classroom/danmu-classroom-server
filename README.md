@@ -37,3 +37,11 @@ $ rails g -h
 # work
 $ rails g -h
 ```
+
+## figaro 環境變數設定
+
+把 `config/application.yml` 的變數上傳至 Heroku
+
+```bash
+$ figaro heroku:set -e production
+```
