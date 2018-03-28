@@ -28,6 +28,6 @@ class Room < ApplicationRecord
 
   def first_publish_to_redis
     $redis.publish self.channel, 'Room Created.'
-    logger.info "publish channel: #{@room.channel}, message: Room Created."
+    logger.info "publish channel: #{self.channel}, message: Room Created."
   end
 end
