@@ -23,7 +23,7 @@ Create a new room:
 ```
 
 
-- Desc: Create a new room with csrf token.
+- Desc: Create a new room with csrf token, return redis url and channel for subscribe.
 - HTTP Method: `POST`
 - URL: `/rooms`
 - Example: `https://danmu-classroom.herokuapp.com/rooms?authenticity_token=token`
