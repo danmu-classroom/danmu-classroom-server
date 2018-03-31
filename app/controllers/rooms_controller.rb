@@ -2,12 +2,7 @@ class RoomsController < ApiController
   before_action :set_room, only: %i[show destroy]
 
   def index
-    rooms = if params[:online] == 'true'
-              Room.where(online: true)
-            else
-              Room.all
-            end
-    @rooms = rooms.order(id: :desc)
+    @rooms = Room.where(online: true).order(id: :desc)
   end
 
   def show; end
