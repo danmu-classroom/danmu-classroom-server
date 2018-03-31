@@ -12,10 +12,6 @@ class RoomsController < ApiController
 
   def show; end
 
-  def new
-    @room = Room.new
-  end
-
   def create
     @room = Room.new(room_params)
     @room.creater_ip = request.remote_ip

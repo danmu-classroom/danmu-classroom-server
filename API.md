@@ -3,30 +3,10 @@ API doc
 # Room
 
 Create a new room:
-- Desc: Get csrf token first.
-- HTTP Method: `GET`
-- URL: `/rooms/new`
-- Example: `https://danmu-classroom.herokuapp.com/rooms/new`
-- Return json example:
-```json
-{
-  "create_room_url": "https://danmu-classroom.herokuapp.com/rooms",
-  "create_room_action": "POST",
-  "create_room_require_parameters": [
-    "authenticity_token"
-  ],
-  "create_room_option_parameters": [],
-  "authenticity_token": "token",
-  "create_room_example": "POST: https://danmu-classroom.herokuapp.com/rooms?authenticity_token=token",
-  "url": "https://danmu-classroom.herokuapp.com/rooms/new"
-}
-```
-
-
-- Desc: Create a new room with csrf token, return redis url and channel for subscribe.
+- Desc: Create a new room, return redis url and channel for subscribe.
 - HTTP Method: `POST`
 - URL: `/rooms`
-- Example: `https://danmu-classroom.herokuapp.com/rooms?authenticity_token=token`
+- Example: `https://danmu-classroom.herokuapp.com/rooms`
 - Return json example:
 ```json
 {
