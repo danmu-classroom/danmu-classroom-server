@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       # Danmus
       resources :danmus, only: %i[create]
     end
+    # Line bot webhook
+    post 'line/callback'
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
