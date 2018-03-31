@@ -35,6 +35,8 @@ gem 'redis', '~> 4.0'
 
 # ENV
 gem 'figaro'
+# Line bot
+gem 'line-bot-api'
 
 # I18n
 gem 'rails-i18n', '~> 5.1'
