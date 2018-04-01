@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327023945) do
+ActiveRecord::Schema.define(version: 20180401125557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,14 @@ ActiveRecord::Schema.define(version: 20180327023945) do
     t.index ["key"], name: "index_rooms_on_key"
     t.index ["online"], name: "index_rooms_on_online"
     t.index ["stream_ip"], name: "index_rooms_on_stream_ip"
+  end
+
+  create_table "senders", force: :cascade do |t|
+    t.string "uid"
+    t.string "provider"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid", "provider"], name: "index_senders_on_uid_and_provider", unique: true
   end
 
 end
