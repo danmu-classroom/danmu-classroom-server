@@ -1,4 +1,6 @@
 class Room < ApplicationRecord
+  has_many :danmus
+  
   before_create do
     generate_key
     setup_redis_channel

@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180401125557) do
+ActiveRecord::Schema.define(version: 20180401143742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "danmus", force: :cascade do |t|
+    t.string "content"
+    t.bigint "room_id"
+    t.bigint "sender_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_danmus_on_room_id"
+    t.index ["sender_id"], name: "index_danmus_on_sender_id"
+  end
 
   create_table "rooms", force: :cascade do |t|
     t.string "key"
@@ -39,4 +49,6 @@ ActiveRecord::Schema.define(version: 20180401125557) do
     t.index ["uid", "provider"], name: "index_senders_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "danmus", "rooms"
+  add_foreign_key "danmus", "senders"
 end
