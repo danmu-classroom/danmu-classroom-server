@@ -1,2 +1,2 @@
-# set ENV[:REDIS_HOST] and ENV[:REDIS_PORT]
+# set ENV[:REDIS_URL]
 $redis = Redis.new(url: ENV['REDIS_URL'])
