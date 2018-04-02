@@ -1,14 +1,24 @@
 class Room < ApplicationRecord
   has_many :danmus
-  
+
   before_create do
     generate_key
     setup_redis_channel
     active_room
   end
 
+  validate do
+    errors.add(:base, 'Rooms number reach the upper limit.') unless Room.empty_room?
+  end
+
   after_create do
-    first_publish_to_redis
+    publish 'Room Created.'
+  end
+
+  scope :online, -> { where(online: true) }
+
+  def self.empty_room?
+    online.size < (ENV.fetch('MAX_ROOM_NUMBER') { 20 }).to_i
   end
 
   private
@@ -26,8 +36,8 @@ class Room < ApplicationRecord
     self.online ||= true
   end
 
-  def first_publish_to_redis
-    $redis.publish self.channel, 'Room Created.'
-    logger.info "publish channel: #{self.channel}, message: Room Created."
+  def publish(message)
+    $redis.publish channel, message
+    logger.debug "publish to channel: #{channel}, message: #{message}"
   end
 end
