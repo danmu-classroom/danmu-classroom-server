@@ -8,13 +8,13 @@ class LineBotService
     @signature = @request.env['HTTP_X_LINE_SIGNATURE']
     @bot = Line::Bot::Client.new(Rails.application.config.line_bot)
     @chats = @bot.parse_events_from(@body)
+    raise 'signature invalid' unless @bot.validate_signature(@body, @signature)
   end
 
   def perform
-    verify_signature
     @chats.each do |chat|
-      token = chat['replyToken']
-      message = bulid_reply_message(chat)
+      token = chat('replyToken')
+      message = bulid_msg_and_react(chat)
       next if message.blank?
 
       @bot.reply_message token, message
@@ -23,18 +23,40 @@ class LineBotService
 
   private
 
-  def verify_signature
-    raise 'signature invalid' unless @bot.validate_signature(@body, @signature)
-  end
-
-  def bulid_reply_message(chat)
+  def bulid_msg_and_react(chat)
     # write your reply logic here
+    uid = chat['source'].dig('userId')
+    sender = Sender.find_or_create_by(uid: uid, provider: 'line')
     case chat
     when Line::Bot::Event::Message
-      text = chat.message.fetch('text') { '' }
+      text = chat['message'].fetch('text') { '' }
+      return setting_room_key(sender, text) if sender.last_action == 'ask_for_setting_room_key'
+      return creating_danmu(text)
     when Line::Bot::Event::Postback
-      data = chat.as_json.dig('src', 'postback', 'data') || ''
+      data = chat['postback'].fetch('data') { '' }
       data = ActionController::Parameters.new(Rack::Utils.parse_nested_query(data))
+      return ask_for_setting_room_key(sender) if data[:action] == 'ask_for_setting_room_key'
     end
+  end
+
+  def ask_for_setting_room_key(sender)
+    # react
+    sender.ask_for_setting_room_key
+    # return message
+    Message::Text(text: 'Please enter your room key :').to_h
+  end
+
+  def setting_room_key(sender, key)
+    # react
+    sender.room_key = key
+    # return message
+    Message::Text(text: "Room key : #{key}").to_h
+  end
+
+  def creating_danmu(sender, content)
+    # react
+    sender.danmu(content)
+    # return message
+    Message::Text(text: "received message, danmu to room##{sender.room_key}").to_h
   end
 end
