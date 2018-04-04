@@ -20,7 +20,7 @@ class Sender < ApplicationRecord
 
   def send_danmu(text)
     room = Room.find_by!(key: room_key)
-    danmu.create!(room: room, content: text)
+    danmus.create!(room: room, content: text)
     self.last_action = 'danmu'
   end
 end
