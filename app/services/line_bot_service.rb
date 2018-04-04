@@ -66,7 +66,7 @@ class LineBotService
 
   def creating_danmu(sender, content)
     # react
-    sender.danmu(content)
+    sender.send_danmu(content)
     # return message
     Message::Text.new(text: "received message, danmu to room##{sender.room_key}")
   end
