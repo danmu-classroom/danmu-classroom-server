@@ -31,6 +31,7 @@ class LineBotService
     when Line::Bot::Event::Message
       text = chat['message'].fetch('text') { '' }
       return setting_room_key(sender, text) if sender.last_action == 'ask_for_setting_room_key'
+      return no_room_key unless sender.room_key.present?
       return creating_danmu(text)
     when Line::Bot::Event::Postback
       data = chat['postback'].fetch('data') { '' }
@@ -39,13 +40,7 @@ class LineBotService
     end
   end
 
-  def ask_for_setting_room_key(sender)
-    # react
-    sender.ask_for_setting_room_key
-    # return message
-    Message::Text(text: 'Please enter your room key :').to_h
-  end
-
+  # messages and reactions
   def setting_room_key(sender, key)
     # react
     sender.room_key = key
@@ -53,10 +48,33 @@ class LineBotService
     Message::Text(text: "Room key : #{key}").to_h
   end
 
+  def no_room_key
+    # react
+    # nothing
+    # return message
+    Message::Template.new do |t|
+      t.alt_text = 'Set the room key first'
+      t.template = Template::Buttons.new do |b|
+        b.text = 'Set the room key first'
+        b.actions << Action::Postback.new do |a|
+          a.label = 'setting room key now'
+          a.data = 'action=ask_for_setting_room_key'
+        end
+      end
+    end
+  end
+
   def creating_danmu(sender, content)
     # react
     sender.danmu(content)
     # return message
     Message::Text(text: "received message, danmu to room##{sender.room_key}").to_h
+  end
+
+  def ask_for_setting_room_key(sender)
+    # react
+    sender.ask_for_setting_room_key
+    # return message
+    Message::Text(text: 'Please enter your room key :').to_h
   end
 end
