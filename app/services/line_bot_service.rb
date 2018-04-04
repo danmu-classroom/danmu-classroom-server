@@ -32,7 +32,7 @@ class LineBotService
       text = chat['message'].fetch('text') { '' }
       return setting_room_key(sender, text) if sender.last_action == 'ask_for_setting_room_key'
       return no_room_key unless sender.room_key.present?
-      return creating_danmu(text)
+      return creating_danmu(sender, text)
     when Line::Bot::Event::Postback
       data = chat['postback'].fetch('data') { '' }
       data = ActionController::Parameters.new(Rack::Utils.parse_nested_query(data))
