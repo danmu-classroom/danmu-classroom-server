@@ -6,7 +6,7 @@ class Sender < ApplicationRecord
   end
 
   def last_action=(action)
-    @redis.set "#{id}_last_action", action.to_s
+    $redis.set "#{id}_last_action", action.to_s
   end
 
   def room_key
