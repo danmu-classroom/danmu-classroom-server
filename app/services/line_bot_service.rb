@@ -42,6 +42,7 @@ class LineBotService
 
   # messages and reactions
   def setting_room_key(sender, key)
+    p 'setting_room_key'
     # react
     sender.room_key = key
     # return message
@@ -49,6 +50,7 @@ class LineBotService
   end
 
   def no_room_key
+    p 'no_room_key'
     # react
     # nothing
     # return message
@@ -65,6 +67,7 @@ class LineBotService
   end
 
   def creating_danmu(sender, content)
+    p 'creating_danmu'
     # react
     sender.danmu(content)
     # return message
@@ -72,6 +75,7 @@ class LineBotService
   end
 
   def ask_for_setting_room_key(sender)
+    p 'ask_for_setting_room_key'
     # react
     sender.ask_for_setting_room_key
     # return message
