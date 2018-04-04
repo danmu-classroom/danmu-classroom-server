@@ -45,7 +45,7 @@ class LineBotService
     # react
     sender.room_key = key
     # return message
-    Message::Text(text: "Room key : #{key}")
+    Message::Text.new(text: "Room key : #{key}")
   end
 
   def no_room_key
@@ -68,13 +68,13 @@ class LineBotService
     # react
     sender.danmu(content)
     # return message
-    Message::Text(text: "received message, danmu to room##{sender.room_key}")
+    Message::Text.new(text: "received message, danmu to room##{sender.room_key}")
   end
 
   def ask_for_setting_room_key(sender)
     # react
     sender.last_action = 'ask_for_setting_room_key'
     # return message
-    Message::Text(text: 'Please enter your room key :')
+    Message::Text.new(text: 'Please enter your room key :')
   end
 end
