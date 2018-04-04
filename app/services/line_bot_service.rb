@@ -14,7 +14,7 @@ class LineBotService
   def perform
     @chats.each do |chat|
       token = chat['replyToken']
-      message = bulid_msg_and_react(chat)
+      message = bulid_msg_and_react(chat).to_h
       next if message.blank?
 
       @bot.reply_message token, message
@@ -46,7 +46,7 @@ class LineBotService
     # react
     sender.room_key = key
     # return message
-    Message::Text(text: "Room key : #{key}").to_h
+    Message::Text(text: "Room key : #{key}")
   end
 
   def no_room_key
@@ -71,7 +71,7 @@ class LineBotService
     # react
     sender.danmu(content)
     # return message
-    Message::Text(text: "received message, danmu to room##{sender.room_key}").to_h
+    Message::Text(text: "received message, danmu to room##{sender.room_key}")
   end
 
   def ask_for_setting_room_key(sender)
@@ -79,6 +79,6 @@ class LineBotService
     # react
     sender.ask_for_setting_room_key
     # return message
-    Message::Text(text: 'Please enter your room key :').to_h
+    Message::Text(text: 'Please enter your room key :')
   end
 end
