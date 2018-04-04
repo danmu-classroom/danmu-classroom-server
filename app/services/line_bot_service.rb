@@ -13,7 +13,7 @@ class LineBotService
 
   def perform
     @chats.each do |chat|
-      token = chat('replyToken')
+      token = chat['replyToken']
       message = bulid_msg_and_react(chat)
       next if message.blank?
 
