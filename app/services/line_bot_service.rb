@@ -1,5 +1,5 @@
 class LineBotService
-  include Line::Format
+  include Line::Bot::MessageBuilder
   attr_reader :bot, :chats, :request
 
   def initialize(request)

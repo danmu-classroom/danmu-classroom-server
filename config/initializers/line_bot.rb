@@ -1,5 +1,5 @@
 require 'line/bot'
-require 'line/format'
+require 'line/bot/message_builder'
 
 # set channel secret and token
 Rails.application.config.line_bot = {
