@@ -1,5 +1,5 @@
 class Sender < ApplicationRecord
-  has_many :danmus
+  has_many :danmus, dependent: :destroy
 
   def last_action
     $redis.get "#{id}_last_action"
@@ -19,8 +19,8 @@ class Sender < ApplicationRecord
   end
 
   def send_danmu(text)
-    room = Room.find_by!(key: room_key)
-    danmus.create!(room: room, content: text)
+    room_id = Room.find_by!(key: room_key).pluck(:id)
+    danmus.create!(room_id: room_id, content: text)
     self.last_action = 'danmu'
   end
 end

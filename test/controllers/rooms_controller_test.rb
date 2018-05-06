@@ -10,14 +10,9 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
-    get new_room_url
-    assert_response :success
-  end
-
   test "should create room" do
     assert_difference('Room.count') do
-      post rooms_url, params: { room: { channel: @room.channel, ip: @room.ip, key: @room.key, online: @room.online, redis: @room.redis } }
+      post rooms_url, params: { room: { webhook: @room.webhook } }
     end
 
     assert_redirected_to room_url(Room.last)
@@ -26,23 +21,5 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
   test "should show room" do
     get room_url(@room)
     assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_room_url(@room)
-    assert_response :success
-  end
-
-  test "should update room" do
-    patch room_url(@room), params: { room: { channel: @room.channel, ip: @room.ip, key: @room.key, online: @room.online, redis: @room.redis } }
-    assert_redirected_to room_url(@room)
-  end
-
-  test "should destroy room" do
-    assert_difference('Room.count', -1) do
-      delete room_url(@room)
-    end
-
-    assert_redirected_to rooms_url
   end
 end

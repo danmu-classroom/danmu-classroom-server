@@ -3,17 +3,16 @@ API doc
 # Room
 
 Create a new room:
-- Desc: Create a new room, return redis url and channel for subscribe.
+- Desc: Create a new room
 - HTTP Method: `POST`
 - URL: `/rooms`
-- Example: `https://danmu-classroom.herokuapp.com/rooms`
+- Example: `https://danmu-classroom.herokuapp.com/rooms?webhook=https://danmu.app/webhook`
 - Return json example:
 ```json
 {
 	"id": 7,
 	"key": "4e45a3",
-	"redis": "redis://password@host:port",
-	"channel": "4e45a3_1522320425",
+	"webhook": "https://danmu.app/webhook",
 	"stream_ip": "140.117.247.174",
 	"online": true,
 	"creater_ip": "140.117.247.174",

@@ -1,43 +1,44 @@
 class Room < ApplicationRecord
-  has_many :danmus
+  has_many :danmus, dependent: :destroy
 
   before_create do
-    generate_key
-    setup_redis_channel
-    active_room
-  end
-
-  validate do
-    errors.add(:base, 'Rooms number reach the upper limit.') unless Room.empty_room?
-  end
-
-  after_create do
-    publish 'Room Created.'
+    before_create_setting
   end
 
   scope :online, -> { where(online: true) }
 
-  def self.empty_room?
-    online.size < (ENV.fetch('MAX_ROOM_NUMBER') { 20 }).to_i
+  def new_auth_token
+    token = generate_unique_secure_token
+    loop do
+      break token unless self.class.exists?(auth_token: token)
+      token = generate_unique_secure_token
+    end
+    self.auth_token = token
+    self.auth_token_sent_at = Time.now
+  end
+
+  def new_key
+    kee = generate_key
+    loop do
+      break key unless self.class.online.exists?(key: kee)
+      kee = generate_key
+    end
+    self.key = kee
   end
 
   private
 
+  def before_create_setting
+    self.online = true
+    new_key
+    new_auth_token
+  end
+
   def generate_key
-    self.key ||= SecureRandom.hex(3)
+    SecureRandom.hex(3)
   end
 
-  def setup_redis_channel
-    self.redis = ENV['REDIS_URL']
-    self.channel = "#{self.key}_#{created_at.to_i}"
-  end
-
-  def active_room
-    self.online ||= true
-  end
-
-  def publish(message)
-    $redis.publish channel, message
-    logger.debug "publish to channel: #{channel}, message: #{message}"
+  def generate_unique_secure_token
+    SecureRandom.base58(24)
   end
 end

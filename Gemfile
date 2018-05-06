@@ -35,11 +35,13 @@ gem 'redis', '~> 4.0'
 
 # ENV
 gem 'figaro'
-# Line bot
+# Line Bot
 gem 'line-bot-api'
 gem 'line-bot-message-builder', '~> 0.1.1'
 # I18n
 gem 'rails-i18n', '~> 5.1'
+# HTTP Client
+gem "http"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

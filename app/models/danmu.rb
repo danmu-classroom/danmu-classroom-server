@@ -7,11 +7,18 @@ class Danmu < ApplicationRecord
   end
 
   after_create do
-    publish
+    send_to(room.webhook)
   end
 
-  def publish
-    $redis.publish(room.channel, content)
-    Rails.logger.debug { "publish to channel: #{room.channel}, message: #{content}" }
+  def to_h
+    h = {
+      content: content
+    }
+  end
+
+  def send_to(url)
+    res = HTTP.post(url, json: to_h).body.to_s
+    puts res
+    Rails.logger.debug { "send danmu : #{url} : #{to_h.to_json}" }
   end
 end

@@ -2,14 +2,14 @@
 
 one:
   key: MyString
-  ip: MyString
-  redis: MyString
-  channel: MyString
+  webhook: MyString
   online: false
+  stream_ip: MyString
+  creater_ip: MyString
 
 two:
   key: MyString
-  ip: MyString
-  redis: MyString
-  channel: MyString
+  webhook: MyString
   online: false
+  stream_ip: MyString
+  creater_ip: MyString
