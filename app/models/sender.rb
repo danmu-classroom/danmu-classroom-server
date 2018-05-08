@@ -22,6 +22,9 @@ class Sender < ApplicationRecord
     room = Room.find_by!(key: room_key)
     danmus.create!(room: room, content: text)
     self.last_action = 'danmu'
+    true
+  rescue
+    false
   end
 
   def delete_room_key

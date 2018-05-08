@@ -15,7 +15,6 @@ class LineBotService
     @chats.each do |chat|
       token = chat['replyToken']
       message = bulid_msg_and_react(chat).to_h
-      Rails.logger.info message
       next if message.blank?
 
       @bot.reply_message token, message
@@ -45,7 +44,7 @@ class LineBotService
   # messages and reactions
   def setting_room_key(sender, key)
     # react
-    sender.room_key = key
+    sender.room_key = key.downcase
     # return message
     Message::Text.new(text: "Room key : #{key}")
   end
@@ -68,9 +67,12 @@ class LineBotService
 
   def creating_danmu(sender, content)
     # react
-    sender.send_danmu(content)
+    text = if sender.send_danmu(content)
+             "Room##{sender.room_key} danmu received."
+           else
+             "Error from sending danmu to room##{sender.room_key}"
+           end
     # return message
-    text = "Room##{sender.room_key} danmu received."
     Message::Template.new do |t|
       t.alt_text = text
       t.template = Template::Buttons.new do |b|
