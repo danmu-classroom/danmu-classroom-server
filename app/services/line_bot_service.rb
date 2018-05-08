@@ -37,6 +37,7 @@ class LineBotService
       data = chat['postback'].fetch('data') { '' }
       data = ActionController::Parameters.new(Rack::Utils.parse_nested_query(data))
       return ask_for_setting_room_key(sender) if data[:action] == 'ask_for_setting_room_key'
+      return clean_room_key(sender) if data[:action] == 'ask_for_delete_room_key'
     end
   end
 
@@ -57,7 +58,7 @@ class LineBotService
       t.template = Template::Buttons.new do |b|
         b.text = 'Set the room key first'
         b.actions << Action::Postback.new do |a|
-          a.label = 'setting room key now'
+          a.label = 'Setting room key'
           a.data = 'action=ask_for_setting_room_key'
         end
       end
@@ -68,7 +69,21 @@ class LineBotService
     # react
     sender.send_danmu(content)
     # return message
-    Message::Text.new(text: "received message, danmu to room##{sender.room_key}")
+    text = "Room##{sender.room_key} danmu received."
+    Message::Template.new do |t|
+      t.alt_text = text
+      t.template = Template::Buttons.new do |b|
+        b.text = text
+        b.actions << Action::Postback.new do |a|
+          a.label = 'Change room key'
+          a.data = 'action=ask_for_setting_room_key'
+        end
+        b.actions << Action::Postback.new do |a|
+          a.label = 'Exit room'
+          a.data = 'action=ask_for_delete_room_key'
+        end
+      end
+    end
   end
 
   def ask_for_setting_room_key(sender)
@@ -76,5 +91,13 @@ class LineBotService
     sender.last_action = 'ask_for_setting_room_key'
     # return message
     Message::Text.new(text: 'Please enter your room key :')
+  end
+
+  def clean_room_key(sender)
+    # react
+    old_key = sender.room_key
+    sender.delete_room_key
+    # return message
+    Message::Text.new(text: "Exit Room##{old_key} successed")
   end
 end

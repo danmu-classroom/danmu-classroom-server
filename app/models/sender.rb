@@ -23,4 +23,9 @@ class Sender < ApplicationRecord
     danmus.create!(room: room, content: text)
     self.last_action = 'danmu'
   end
+
+  def delete_room_key
+    $redis.del "#{id}_room_key"
+    self.last_action = 'delete_room_key'
+  end
 end
