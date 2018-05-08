@@ -15,6 +15,7 @@ class LineBotService
     @chats.each do |chat|
       token = chat['replyToken']
       message = bulid_msg_and_react(chat).to_h
+      logger.info message
       next if message.blank?
 
       @bot.reply_message token, message
