@@ -26,6 +26,10 @@ class Room < ApplicationRecord
     self.key = kee
   end
 
+  def auth?(token)
+    auth_token == token
+  end
+
   private
 
   def before_create_setting

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   defaults format: :json do
     # Rooms
-    resources :rooms, only: %i[index show create], param: :key do
+    resources :rooms, only: %i[index show create update], param: :key do
       # Danmus
       resources :danmus, only: %i[create]
     end

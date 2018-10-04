@@ -1,5 +1,6 @@
 class RoomsController < ApiController
-  before_action :set_room, only: %i[show]
+  before_action :set_room, only: %i[show update]
+  before_action :check_auth_token, only: %i[update]
 
   def index
     @rooms = Room.online.order(id: :desc)
@@ -13,7 +14,15 @@ class RoomsController < ApiController
       room.stream_ip = request.remote_ip
     end
     if @room.save
-      render :show, status: :created, location: @room
+      render :show, status: :created, location: @room, locals: { show_auth_token: true }
+    else
+      render json: @room.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @room.update(room_params)
+      render :show, status: :ok, location: @room
     else
       render json: @room.errors, status: :unprocessable_entity
     end
@@ -27,5 +36,9 @@ class RoomsController < ApiController
 
   def room_params
     params.require(:room).permit(:webhook)
+  end
+
+  def check_auth_token
+    render json: { error: 'wrong auth_token' }, status: :unauthorized unless @room.auth?(params[:auth_token])
   end
 end
