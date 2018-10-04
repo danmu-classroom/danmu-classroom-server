@@ -44,7 +44,7 @@ class LineBotService
   # messages and reactions
   def setting_room_key(sender, key)
     # react
-    sender.room_key = key.downcase
+    sender.room_key = key.strip.downcase
     # return message
     Message::Text.new(text: "Room key : #{key}")
   end

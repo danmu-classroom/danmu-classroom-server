@@ -35,7 +35,8 @@ class Room < ApplicationRecord
   end
 
   def generate_key
-    SecureRandom.hex(3)
+    # SecureRandom.hex(3) # 6位英數混合
+    SecureRandom.random_number.to_s[2..5] # 4位數字
   end
 
   def generate_unique_secure_token
