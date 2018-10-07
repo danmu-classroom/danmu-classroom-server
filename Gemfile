@@ -33,15 +33,12 @@ gem 'redis', '~> 4.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# ENV
-gem 'figaro'
-# Line Bot
-gem 'line-bot-api'
-gem 'line-bot-message-builder', '~> 0.1.2'
-# I18n
-gem 'rails-i18n', '~> 5.1'
-# HTTP Client
-gem "http"
+gem 'figaro' # ENV
+gem 'line-bot-api' # Line Bot
+gem 'line-bot-message-builder', '~> 0.1.2' # Line Bot Message Builder
+gem 'rails-i18n', '~> 5.1' # I18n
+gem "http" # HTTP Client
+gem 'devise' # User Authentication
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
