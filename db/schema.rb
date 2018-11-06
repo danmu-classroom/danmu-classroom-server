@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181007014835) do
+ActiveRecord::Schema.define(version: 20181007042303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,9 @@ ActiveRecord::Schema.define(version: 20181007014835) do
     t.string "webhook"
     t.string "auth_token"
     t.datetime "auth_token_sent_at"
+    t.bigint "creater_id"
     t.index ["auth_token"], name: "index_rooms_on_auth_token", unique: true
+    t.index ["creater_id"], name: "index_rooms_on_creater_id"
     t.index ["creater_ip"], name: "index_rooms_on_creater_ip"
     t.index ["key"], name: "index_rooms_on_key"
     t.index ["online"], name: "index_rooms_on_online"
@@ -64,4 +66,5 @@ ActiveRecord::Schema.define(version: 20181007014835) do
 
   add_foreign_key "danmus", "rooms"
   add_foreign_key "danmus", "senders"
+  add_foreign_key "rooms", "users", column: "creater_id"
 end

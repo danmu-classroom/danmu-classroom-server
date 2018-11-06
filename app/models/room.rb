@@ -1,5 +1,6 @@
 class Room < ApplicationRecord
   has_many :danmus, dependent: :destroy
+  belongs_to :creater, class_name: 'User', foreign_key: 'creater_id', optional: true
 
   before_create do
     before_create_setting
