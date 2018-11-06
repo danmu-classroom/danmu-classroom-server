@@ -1,0 +1,6 @@
+attributes:
+  - primary_keys
+  - content
+  - inheritance
+  - foreign_key
+  - timestamps
