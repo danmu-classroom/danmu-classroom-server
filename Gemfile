@@ -39,6 +39,8 @@ gem 'line-bot-message-builder', '~> 0.1.2' # Line Bot Message Builder
 gem 'rails-i18n', '~> 5.1' # I18n
 gem "http" # HTTP Client
 gem 'devise' # User Authentication
+gem 'simple_form' # Form Builder
+gem 'font-awesome-sass', '~> 5.5.0' # Icons
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
