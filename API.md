@@ -6,7 +6,7 @@ API doc
 
 -   Desc: Create a new room
 -   HTTP Method: `POST`
--   URL: `/rooms`
+-   URL: `api/rooms`
 -   request body:
 
 ```json
@@ -35,7 +35,7 @@ API doc
 
 -   Desc: update room
 -   HTTP Method: `PATCH`
--   URL: `/rooms/:key`
+-   URL: `api/rooms/:key`
 -   request body:
 
 ```json
@@ -65,7 +65,7 @@ API doc
 
 -   Desc: create a danmu
 -   HTTP Method: `POST`
--   URL: `/rooms/:key/danmus`
+-   URL: `api/rooms/:key/danmus`
 -   request body:
 
 ```json
