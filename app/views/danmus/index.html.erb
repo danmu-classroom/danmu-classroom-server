@@ -1,0 +1,19 @@
+<h2>彈幕教室 <%= @room.id %></h2>
+<p>房號: <%= @room.key %></p>
+<p>創建時間: <%= @room.created_at %></p>
+<table class="table mt-2">
+  <thead>
+    <tr>
+      <th>彈幕</th>
+      <th>創建時間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @danmus.each do |danmu| %>
+      <tr>
+        <td><%= room.content %></td>
+        <td><%= room.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
