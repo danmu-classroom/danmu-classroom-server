@@ -1,0 +1,21 @@
+<h2>歷史彈幕教室</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>key</th>
+      <th>創建時間</th>
+      <th>查看</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rooms.each do |room| %>
+      <tr>
+        <td><%= room.id %></td>
+        <td><%= room.key %></td>
+        <td><%= room.created_at %></td>
+        <td><%= link_to '查看', room_danmus_path(room), class: 'btn btn-secondary' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
