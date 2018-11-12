@@ -10,7 +10,10 @@
   </head>
 
   <body class="bg-light">
-    <%= bootstrap_alerts %>
-    <%= yield %>
+    <%= render 'common/title' %>
+    <div class="container">
+      <%= bootstrap_alerts %>
+      <%= yield %>
+    </div>
   </body>
 </html>

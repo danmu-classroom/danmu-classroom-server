@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
-
-  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
+  devise_for :users
+  resources :rooms, only: %i[index] do
 
   namespace :api, defaults: { format: 'json' } do
     resources :rooms, only: %i[index show create update], param: :key do
