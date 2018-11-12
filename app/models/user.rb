@@ -3,5 +3,5 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :room, dependent: :nullify
+  has_many :rooms, dependent: :nullify, foreign_key: 'creater_id'
 end

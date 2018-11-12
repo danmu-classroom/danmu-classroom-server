@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     resources :rooms, only: %i[index show create update], param: :key do
+      post 'update_creater', on: :member
       resources :danmus, only: %i[create]
     end
     post 'line/callback' # Line bot webhook

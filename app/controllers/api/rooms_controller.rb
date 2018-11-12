@@ -1,6 +1,7 @@
 class Api::RoomsController < ApiController
-  before_action :set_room, only: %i[show update]
-  before_action :check_auth_token, only: %i[update]
+  before_action :set_room, only: %i[show update update_creater]
+  before_action :check_auth_token, only: %i[update update_creater]
+  before_action :set_user, only: %i[update_creater]
 
   def index
     @rooms = Room.online.order(id: :desc)
@@ -28,14 +29,32 @@ class Api::RoomsController < ApiController
     end
   end
 
+  def update_creater
+    @room.creater = @user
+    if @room.save
+      render :show, status: :ok, location: api_room_path(@room)
+    else
+      render json: @room.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_room
     @room = Room.find_by!(key: params[:key])
   end
 
+  def set_user
+    @user = User.find_for_authentication(email: login_params[:email])
+    render json: { error: 'wrong email or password' }, status: :unauthorized unless @user&.valid_password?(login_params[:password])
+  end
+
   def room_params
     params.require(:room).permit(:webhook)
+  end
+
+  def login_params
+    params.require(:user).permit(:email, :password)
   end
 
   def check_auth_token
