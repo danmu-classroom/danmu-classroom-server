@@ -15,10 +15,10 @@ gem 'redis', '~> 4.1' # Cache database
 gem 'sass-rails', '~> 5.0' # SCSS
 gem 'turbolinks', '~> 5' # https://github.com/turbolinks/turbolinks
 gem 'uglifier', '>= 1.3.0' # Uglifier as compressor for JavaScript assets
+gem 'bootsnap', require: false # Speed up booting, # https://github.com/Shopify/bootsnap
 
 # Append gems
 gem 'devise' # User Authentication
-gem 'figaro' # ENV
 gem 'font-awesome-sass', '~> 5.5.0' # Icons
 gem 'http' # HTTP Client
 gem 'line-bot-api' # Line Bot

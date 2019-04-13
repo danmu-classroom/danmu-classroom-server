@@ -2,46 +2,17 @@
 
 # Tech Stack
 
-Ruby 2.5
-Rails 5.1.4
+Ruby 2.5.0
+Rails 5.2.3
 Postgres 10
-Redis 4
+Redis 4.1
 
 # Deploy
 
-部屬於 Heroku
+部屬於 Heroku，環境變數 RAILS_MASTER_KEY 的值填入 `config/master.key` 內的金鑰。
 
-## 多帳號切換外掛
-
-切換 Heroku User 的外掛 <https://github.com/heroku/heroku-accounts>
-記錄於 `~/.heroku/accounts`
-
-# issue note
-
-## `rails` 指令沒有反應
+編輯 credentials
 
 ```bash
-# no response
-$ rails g -h
-```
-
-> <https://stackoverflow.com/questions/31857365/rails-generate-commands-hang-when-trying-to-create-a-model>
-
-把 `spring` 停掉
-
-    $ spring stop
-
-在重試指令，就好了
-
-```bash
-# work
-$ rails g -h
-```
-
-## figaro 環境變數設定
-
-把 `config/application.yml` 的變數上傳至 Heroku
-
-```bash
-$ figaro heroku:set -e production
+$ EDITOR="atom --wait" rails credentials:edit
 ```

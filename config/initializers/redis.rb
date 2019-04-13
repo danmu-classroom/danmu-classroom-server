@@ -1,2 +1,2 @@
-# set ENV[:REDIS_URL]
-$redis = Redis.new(url: ENV['REDIS_URL'])
+url = ENV['REDIS_URL'] || Rails.application.credentials[Rails.env]&.dig(:redis_url) || 'redis://localhost:6379/1'
+$redis = Redis.new(url: url)
