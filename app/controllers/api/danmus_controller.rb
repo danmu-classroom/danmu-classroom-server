@@ -1,5 +1,10 @@
 class Api::DanmusController < ApiController
-  before_action :set_room, only: [:create]
+  before_action :set_room, only: %i[index create]
+  before_action :check_auth_token, only: %i[index]
+
+  def index
+    render json: @room.pop_danmus, status: :ok
+  end
 
   def create
     @danmu = @room.danmus.build(danmu_params)
@@ -20,6 +25,10 @@ class Api::DanmusController < ApiController
 
   def set_room
     @room = Room.find_by!(key: params[:room_key])
+  end
+
+  def check_auth_token
+    render json: { error: 'wrong auth_token' }, status: :unauthorized unless @room.auth?(params[:auth_token])
   end
 
   def danmu_params
