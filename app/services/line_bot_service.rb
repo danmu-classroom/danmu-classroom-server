@@ -32,6 +32,7 @@ class LineBotService
       text = chat['message'].fetch('text') { '' }
       return setting_room_key(sender, text) if sender.last_action == 'ask_for_setting_room_key'
       return no_room_key unless sender.room_key.present?
+
       return creating_danmu(sender, text)
     when Line::Bot::Event::Postback
       data = chat['postback'].fetch('data') { '' }
@@ -46,7 +47,7 @@ class LineBotService
     # react
     sender.room_key = key.strip.downcase
     # return message
-    Message::Text.new(text: "Room key : #{key}")
+    Message::Text.new(text: "你輸入的房號為 #{key}")
   end
 
   def no_room_key
@@ -56,9 +57,9 @@ class LineBotService
     Message::Template.new do |t|
       t.alt_text = 'Set the room key first'
       t.template = Template::Buttons.new do |b|
-        b.text = 'Set the room key first'
+        b.text = '請先告訴我你要去哪間房間嗨'
         b.actions << Action::Postback.new do |a|
-          a.label = 'Setting room key'
+          a.label = '輸入房號'
           a.data = 'action=ask_for_setting_room_key'
         end
       end
@@ -68,9 +69,9 @@ class LineBotService
   def creating_danmu(sender, content)
     # react
     text = if sender.send_danmu(content)
-             "Room##{sender.room_key} danmu received."
+             "成功發送彈幕至 ##{sender.room_key}"
            else
-             "Error from sending danmu to room##{sender.room_key}"
+             "出錯啦，無法發送彈幕至 ##{sender.room_key}，要不是你房號打錯，就是我程式寫錯（希望是你打錯）"
            end
     # return message
     Message::Template.new do |t|
@@ -78,11 +79,11 @@ class LineBotService
       t.template = Template::Buttons.new do |b|
         b.text = text
         b.actions << Action::Postback.new do |a|
-          a.label = 'Change room key'
+          a.label = '換個房間'
           a.data = 'action=ask_for_setting_room_key'
         end
         b.actions << Action::Postback.new do |a|
-          a.label = 'Exit room'
+          a.label = '離開房間'
           a.data = 'action=ask_for_delete_room_key'
         end
       end
@@ -93,7 +94,7 @@ class LineBotService
     # react
     sender.last_action = 'ask_for_setting_room_key'
     # return message
-    Message::Text.new(text: 'Please enter your room key :')
+    Message::Text.new(text: '輸入房間號碼，不知道房號多少的請看螢幕或是問隔壁（要不然就猜猜看？）')
   end
 
   def clean_room_key(sender)
@@ -101,6 +102,6 @@ class LineBotService
     old_key = sender.room_key
     sender.delete_room_key
     # return message
-    Message::Text.new(text: "Exit Room##{old_key} successed")
+    Message::Text.new(text: "已經離開房間##{old_key}，人客欸下次再來喔~")
   end
 end
