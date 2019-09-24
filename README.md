@@ -16,3 +16,7 @@ Redis 4.1
 ```bash
 $ EDITOR="atom --wait" rails credentials:edit
 ```
+
+# API
+
+you can send a http request to https://danmu-classroom.herokuapp.com/. check out our RESTful api in `doc/api/*.md`
