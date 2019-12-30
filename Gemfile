@@ -11,7 +11,7 @@ gem 'rails', '~> 5.2.3'
 gem 'bootsnap', require: false # Speed up booting, # https://github.com/Shopify/bootsnap
 gem 'jbuilder', '~> 2.5' # Build JSON APIs, https://github.com/rails/jbuilder
 gem 'pg', '>= 0.18', '< 2.0' # Active Record Postgresql
-gem 'puma', '~> 3.7' # App server
+gem 'puma', '~> 3.12' # App server
 gem 'redis', '~> 4.1' # Cache database
 gem 'sass-rails', '~> 5.0' # SCSS
 gem 'turbolinks', '~> 5' # https://github.com/turbolinks/turbolinks
