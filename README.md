@@ -2,10 +2,10 @@
 
 # Tech Stack
 
-Ruby 2.5.0
-Rails 5.2.3
-Postgres 10
-Redis 4.1
+Ruby 2.5.0  
+Rails 5.2.3  
+Postgres 10  
+Redis 4.1  
 
 # Deploy
 
