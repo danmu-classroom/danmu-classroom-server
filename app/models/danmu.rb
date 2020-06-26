@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class Danmu < ApplicationRecord
+  include RedisAccessible
+
   belongs_to :room
   belongs_to :sender
 
@@ -8,7 +12,7 @@ class Danmu < ApplicationRecord
   end
 
   after_create do
-    $redis.lpush "room_#{room_id}", to_h.to_json
+    redis.lpush "room_#{room_id}", to_h.to_json
   end
 
   def to_h

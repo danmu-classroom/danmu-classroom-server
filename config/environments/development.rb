@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -61,4 +63,13 @@ Rails.application.configure do
 
   # devise mailer config for development
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Redis
+  config.redis_url = 'redis://localhost:6379/1'
+
+  # Line bot
+  config.line_bot = {
+    channel_secret: Rails.application.credentials.line_bot[:channel_secret],
+    channel_token: Rails.application.credentials.line_bot[:channel_token]
+  }
 end
