@@ -1,0 +1,18 @@
+{
+  "emmet.includeLanguages": { "erb": "html" },
+  "emmet.triggerExpansionOnTab": true,
+  "files.associations": {
+    ".prettierrc": "yaml",
+    "*.erb": "erb"
+  },
+  "[ruby][javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[erb]": { "editor.defaultFormatter": "aliariff.vscode-erb-beautify" },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": { "source.fixAll": true },
+  "eslint.packageManager": "yarn",
+  "eslint.validate": ["javascript", "html", "erb", "vue"],
+  "solargraph.diagnostics": true,
+  "solargraph.formatting": true,
+  "editor.tabSize": 2,
+  "files.eol": "\n"
+}
