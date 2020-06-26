@@ -5,8 +5,9 @@
     ".prettierrc": "yaml",
     "*.erb": "erb"
   },
-  "[ruby][javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[erb]": { "editor.defaultFormatter": "aliariff.vscode-erb-beautify" },
+  "ruby.rubocop.useBundler": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": { "source.fixAll": true },
   "eslint.packageManager": "yarn",
