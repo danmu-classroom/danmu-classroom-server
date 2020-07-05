@@ -26,7 +26,7 @@ gem 'devise', '~> 4.7' # User Authentication
 gem 'font-awesome-sass', '~> 5.13' # Icons
 gem 'http', '~> 4.4' # HTTP Client
 gem 'line-bot-api', '~> 1.14' # Line Bot
-gem 'line-bot-message-builder', '~> 0.1.2' # Line Bot Message Builder
+gem 'line-bot-message-builder', '~> 0.1.2', require: 'line/bot/message_builder' # Line Bot Message Builder
 gem 'rails-i18n', '~> 5.1' # I18n
 gem 'simple_form', '~> 5.0' # Form Builder
 

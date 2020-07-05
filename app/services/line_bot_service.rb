@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LineBotService
   include Line::Bot::MessageBuilder
   attr_reader :bot, :chats, :request
@@ -6,7 +8,7 @@ class LineBotService
     @request = request
     @body = @request.raw_post
     @signature = @request.env['HTTP_X_LINE_SIGNATURE']
-    @bot = Line::Bot::Client.new(Rails.application.config.line_bot)
+    @bot = Singletons.instance.line_bot
     @chats = @bot.parse_events_from(@body)
     raise 'signature invalid' unless @bot.validate_signature(@body, @signature)
   end
