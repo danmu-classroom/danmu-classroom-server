@@ -103,4 +103,13 @@ Rails.application.configure do
     channel_secret: Rails.application.credentials.line_bot[:channel_secret],
     channel_token: Rails.application.credentials.line_bot[:channel_token]
   }
+
+  # Pusher
+  config.pusher = {
+    app_id: Rails.application.credentials.pusher[:app_id],
+    key: Rails.application.credentials.pusher[:key],
+    secret: Rails.application.credentials.pusher[:secret],
+    cluster: Rails.application.credentials.pusher[:cluster],
+    encrypted: true
+  }
 end
