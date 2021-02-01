@@ -7,7 +7,7 @@ default: &default
 development:
   <<: *default
   database: danmu_classroom_development
-  username: Xin
+  username: aaron
   password: '0417'
   host: localhost
   port: 5432
@@ -15,7 +15,7 @@ development:
 test:
   <<: *default
   database: danmu_classroom_test
-  username: Xin
+  username: aaron
   password: '0417'
   host: localhost
   port: 5432
