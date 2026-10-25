@@ -8,7 +8,7 @@ class WebPagesTest < ActionDispatch::IntegrationTest
     assert_select 'title', '彈幕教室'
     assert_select 'h2', '參與者'
     assert_select 'link[rel=stylesheet]'
-    assert_select 'script[src]'
+    assert_select 'script[type=importmap]'
   end
 
   test 'room history requires sign in' do

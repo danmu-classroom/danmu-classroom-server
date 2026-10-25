@@ -3,7 +3,10 @@ require 'rake'
 
 class RoomsCloseTaskTest < ActiveSupport::TestCase
   setup do
-    Rails.application.load_tasks if Rake::Task.tasks.empty?
+    unless Rake::Task.task_defined?('rooms:close')
+      Rake::Task.define_task(:environment)
+      load Rails.root.join('lib/tasks/rooms.rake')
+    end
     Rake::Task['rooms:close'].reenable
   end
 

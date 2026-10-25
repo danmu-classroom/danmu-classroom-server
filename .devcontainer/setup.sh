@@ -3,8 +3,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 bundle check || bundle install
 yarn install --frozen-lockfile
-
-# Rails 5.2 has no db:prepare: migrate an existing DB, otherwise create + load schema + seed.
-bin/rails db:migrate 2>/dev/null || bin/rails db:setup
+yarn build:css
+bin/rails db:prepare

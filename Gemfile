@@ -2,50 +2,44 @@
 
 source 'https://rubygems.org'
 
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
-  "https://github.com/#{repo_name}.git"
-end
+ruby file: '.ruby-version'
 
-ruby '2.7.1'
-
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 8.1.4'
 
 # Rails default gems
-gem 'bootsnap', '~> 1.4', require: false # Speed up booting, # https://github.com/Shopify/bootsnap
-gem 'jbuilder', '~> 2.10' # Build JSON APIs, https://github.com/rails/jbuilder
-gem 'pg', '~> 1.2' # Active Record Postgresql
-gem 'puma', '~> 4.3' # App server
-gem 'redis', '~> 4.2' # Cache database
-gem 'sass-rails', '~> 5.1' # SCSS
-gem 'turbolinks', '~> 5.2' # https://github.com/turbolinks/turbolinks
-gem 'uglifier', '~> 4.2' # Uglifier as compressor for JavaScript assets
+gem 'bootsnap', require: false # Speed up booting, https://github.com/Shopify/bootsnap
+gem 'cssbundling-rails' # Bootstrap 5 / Sass via yarn, https://github.com/rails/cssbundling-rails
+gem 'importmap-rails' # JavaScript with ESM import maps, https://github.com/rails/importmap-rails
+gem 'jbuilder' # Build JSON APIs, https://github.com/rails/jbuilder
+gem 'pg', '~> 1.6' # Active Record Postgresql
+gem 'propshaft' # Asset pipeline, https://github.com/rails/propshaft
+gem 'puma', '>= 6.0' # App server
+gem 'redis', '~> 5.4' # Danmu queue and LINE sender state
+gem 'stimulus-rails' # https://stimulus.hotwired.dev
+gem 'turbo-rails' # https://turbo.hotwired.dev
 
 # Append gems
-gem 'devise', '~> 4.7' # User Authentication
-gem 'font-awesome-sass', '~> 5.13' # Icons
-gem 'http', '~> 4.4' # HTTP Client
-gem 'line-bot-api', '~> 1.14' # Line Bot
-gem 'line-bot-message-builder', '~> 0.1.2', require: 'line/bot/message_builder' # Line Bot Message Builder
-gem 'pusher', '~> 1.3' # Websocket server as a service, https://pusher.com
-gem 'rails-i18n', '~> 5.1' # I18n
-gem 'simple_form', '~> 5.0' # Form Builder
+gem 'devise', '~> 5.0' # User Authentication
+gem 'line-bot-api', '~> 2.11' # Line Bot
+gem 'rails-i18n', '~> 8.1' # I18n
+gem 'simple_form', '~> 5.4' # Form Builder
 
 group :development, :test do
-  gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw] # Debugger
-  gem 'capybara', '~> 3.32' # System testing
-  gem 'selenium-webdriver', '~> 3.142' # Selenium
+  gem 'brakeman', require: false # Static analysis for security vulnerabilities
+  gem 'debug', platforms: %i[mri windows], require: 'debug/prelude' # Debugger
+  gem 'rubocop-rails-omakase', require: false # Formatter, https://github.com/rails/rubocop-rails-omakase
 end
 
 group :development do
-  gem 'htmlbeautifier', '~> 1.3'
-  gem 'listen', '~> 3.2'
-  gem 'pry-rails', '~> 0.3.9'
-  gem 'rails-erd', '~> 1.6'
-  gem 'rubocop', '~> 0.85.1' # Formater
-  gem 'spring' # https://github.com/rails/spring
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'htmlbeautifier'
+  gem 'rails-erd'
+  gem 'web-console'
+end
+
+group :test do
+  gem 'capybara' # System testing
+  gem 'selenium-webdriver'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', '~> 1.2020', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data', platforms: %i[windows jruby]

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Health check: 200 when the app boots without exceptions (load balancers / uptime monitors)
+  get 'up' => 'rails/health#show', as: :rails_health_check
+
   root to: 'pages#index'
   devise_for :users
   resources :rooms, only: %i[index] do

@@ -1,5 +1,5 @@
 {
-  "name": "danmu-classroom-server (Ruby 2.7.1)",
+  "name": "danmu-classroom-server (Ruby 4.0 / Rails 8.1)",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "runServices": ["app", "db", "redis"],
@@ -10,9 +10,8 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "misogi.ruby-rubocop",
+        "Shopify.ruby-lsp",
         "aliariff.vscode-erb-beautify",
-        "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "streetsidesoftware.code-spell-checker"
       ]

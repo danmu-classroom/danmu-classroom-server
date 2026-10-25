@@ -13,8 +13,8 @@ services:
       - bundle:/usr/local/bundle
       - node_modules:/workspaces/danmu-classroom-server/node_modules
     environment:
-      # Compile native gems: prebuilt nokogiri needs glibc 2.29, buster has 2.28.
-      BUNDLE_FORCE_RUBY_PLATFORM: "true"
+      # Let `bin/rails server` / `bin/dev` accept connections through the published port
+      BINDING: 0.0.0.0
       DB_HOST: db
       DB_USERNAME: aaron
       DB_PASSWORD: "0417"
@@ -29,19 +29,20 @@ services:
       - redis
 
   db:
-    image: postgres:12
+    image: postgres:18
     restart: unless-stopped
     environment:
       POSTGRES_USER: aaron
       POSTGRES_PASSWORD: "0417"
     volumes:
-      - postgres:/var/lib/postgresql/data
+      # Postgres 18 images keep data under /var/lib/postgresql/<major>/docker
+      - postgres18:/var/lib/postgresql
 
   redis:
-    image: redis:6
+    image: redis:8
     restart: unless-stopped
 
 volumes:
   bundle:
   node_modules:
-  postgres:
+  postgres18:

@@ -5,8 +5,11 @@ class LineCallbackTest < ActionDispatch::IntegrationTest
     @replies = []
     replies = @replies
     @bot = Singletons.instance.line_bot
-    @bot.define_singleton_method(:reply_message) do |token, message|
-      replies << [token, message.to_h.deep_symbolize_keys]
+    # Capture replies as the JSON payload the SDK would send to LINE
+    @bot.define_singleton_method(:reply_message) do |reply_message_request:|
+      utils = Line::Bot::V2::Utils
+      payload = utils.deep_compact(utils.deep_camelize(utils.deep_to_hash(reply_message_request)))
+      payload[:messages].each { |message| replies << [payload[:replyToken], message] }
     end
   end
 
@@ -22,14 +25,18 @@ class LineCallbackTest < ActionDispatch::IntegrationTest
                                headers: { 'Content-Type' => 'application/json', 'X-Line-Signature' => signature }
   end
 
+  def delivery
+    { webhookEventId: SecureRandom.uuid, deliveryContext: { isRedelivery: false } }
+  end
+
   def text_event(text, user: 'line-user-1')
-    { type: 'message', replyToken: "token-#{text}", timestamp: 0, mode: 'active',
+    { type: 'message', replyToken: "token-#{text}", timestamp: 0, mode: 'active', **delivery,
       source: { type: 'user', userId: user },
-      message: { id: '1', type: 'text', text: text } }
+      message: { id: '1', type: 'text', text: text, quoteToken: 'quote-token' } }
   end
 
   def postback_event(data, user: 'line-user-1')
-    { type: 'postback', replyToken: "token-#{data}", timestamp: 0, mode: 'active',
+    { type: 'postback', replyToken: "token-#{data}", timestamp: 0, mode: 'active', **delivery,
       source: { type: 'user', userId: user },
       postback: { data: data } }
   end

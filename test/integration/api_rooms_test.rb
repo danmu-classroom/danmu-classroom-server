@@ -37,8 +37,10 @@ class ApiRoomsTest < ActionDispatch::IntegrationTest
     assert_equal room['key'], json['key']
   end
 
-  test 'GET /api/rooms/:key raises RecordNotFound (404 in production) for an unknown key' do
-    assert_raises(ActiveRecord::RecordNotFound) { get '/api/rooms/0000' }
+  test 'GET /api/rooms/:key returns 404 for an unknown key' do
+    get '/api/rooms/0000'
+
+    assert_response :not_found
   end
 
   test 'PATCH /api/rooms/:key assigns the room to a user with valid credentials' do
