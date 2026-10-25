@@ -43,4 +43,11 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Redis: separate DB index from development
+  config.redis_url = ENV.fetch('REDIS_TEST_URL', 'redis://localhost:6379/15')
+
+  # Line bot / Pusher: dummy values, tests stub outgoing calls
+  config.line_bot = { channel_secret: 'test_channel_secret', channel_token: 'test_channel_token' }
+  config.pusher = { app_id: 'test', key: 'test', secret: 'test', cluster: 'test', encrypted: true }
 end

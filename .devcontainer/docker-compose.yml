@@ -19,6 +19,7 @@ services:
       DB_USERNAME: aaron
       DB_PASSWORD: "0417"
       REDIS_URL: redis://redis:6379/1
+      REDIS_TEST_URL: redis://redis:6379/15
     ports:
       # Host port 3001 so it does not clash with other Rails apps on 3000.
       # The screen's development config points at http://localhost:3001.
