@@ -65,20 +65,20 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Redis
-  config.redis_url = 'redis://localhost:6379/1'
+  config.redis_url = ENV.fetch('REDIS_URL', 'redis://localhost:6379/1')
 
   # Line bot
   config.line_bot = {
-    channel_secret: Rails.application.credentials.line_bot[:channel_secret],
-    channel_token: Rails.application.credentials.line_bot[:channel_token]
+    channel_secret: Rails.application.credentials.dig(:line_bot, :channel_secret),
+    channel_token: Rails.application.credentials.dig(:line_bot, :channel_token)
   }
 
   # Pusher
   config.pusher = {
-    app_id: Rails.application.credentials.pusher[:app_id],
-    key: Rails.application.credentials.pusher[:key],
-    secret: Rails.application.credentials.pusher[:secret],
-    cluster: Rails.application.credentials.pusher[:cluster],
+    app_id: Rails.application.credentials.dig(:pusher, :app_id),
+    key: Rails.application.credentials.dig(:pusher, :key),
+    secret: Rails.application.credentials.dig(:pusher, :secret),
+    cluster: Rails.application.credentials.dig(:pusher, :cluster),
     encrypted: true
   }
 end

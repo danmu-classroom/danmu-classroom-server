@@ -1,0 +1,21 @@
+{
+  "name": "danmu-classroom-server (Ruby 2.7.1)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "runServices": ["app", "db", "redis"],
+  "workspaceFolder": "/workspaces/danmu-classroom-server",
+  "shutdownAction": "stopCompose",
+  "initializeCommand": "docker build -t danmu-classroom-server-dev:latest .devcontainer",
+  "postCreateCommand": ".devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "misogi.ruby-rubocop",
+        "aliariff.vscode-erb-beautify",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
+}

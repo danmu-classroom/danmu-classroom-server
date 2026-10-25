@@ -1,0 +1,46 @@
+name: danmu-classroom-server
+
+services:
+  app:
+    # Built by initializeCommand in devcontainer.json (plain `docker build`).
+    # Compose v5 always builds via bake, which refuses the Dockerfile the
+    # devcontainer CLI / VS Code generate in a temp folder, so compose must not build.
+    image: danmu-classroom-server-dev:latest
+    pull_policy: never
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces/danmu-classroom-server:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/workspaces/danmu-classroom-server/node_modules
+    environment:
+      # Compile native gems: prebuilt nokogiri needs glibc 2.29, buster has 2.28.
+      BUNDLE_FORCE_RUBY_PLATFORM: "true"
+      DB_HOST: db
+      DB_USERNAME: aaron
+      DB_PASSWORD: "0417"
+      REDIS_URL: redis://redis:6379/1
+    ports:
+      # Host port 3001 so it does not clash with other Rails apps on 3000.
+      # The screen's development config points at http://localhost:3001.
+      - "${DANMU_SERVER_PORT:-3001}:3000"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:12
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: aaron
+      POSTGRES_PASSWORD: "0417"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6
+    restart: unless-stopped
+
+volumes:
+  bundle:
+  node_modules:
+  postgres:
