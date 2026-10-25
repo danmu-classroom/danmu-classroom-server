@@ -8,7 +8,7 @@ class Danmu < ApplicationRecord
 
   validates_presence_of :content
   validate do
-    errors.add(:base, 'Room is offline, can not add new danmu.') unless room.online?
+    errors.add(:base, "Room is offline, can not add new danmu.") unless room.online?
   end
 
   after_create do

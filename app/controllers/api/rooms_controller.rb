@@ -35,11 +35,11 @@ class Api::RoomsController < ApiController
   end
 
   def check_auth_token
-    render json: { error: 'wrong auth_token' }, status: :unauthorized unless @room.auth?(params[:auth_token])
+    render json: { error: "wrong auth_token" }, status: :unauthorized unless @room.auth?(params[:auth_token])
   end
 
   def set_user
     @user = User.find_for_authentication(email: params[:email])
-    render json: { error: 'wrong email or password' }, status: :unauthorized unless @user&.valid_password?(params[:password])
+    render json: { error: "wrong email or password" }, status: :unauthorized unless @user&.valid_password?(params[:password])
   end
 end

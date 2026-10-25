@@ -49,8 +49,8 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   # Redis: separate DB index from development
-  config.redis_url = ENV.fetch('REDIS_TEST_URL', 'redis://localhost:6379/15')
+  config.redis_url = ENV.fetch("REDIS_TEST_URL", "redis://localhost:6379/15")
 
   # Line bot: dummy values, tests stub outgoing calls
-  config.line_bot = { channel_secret: 'test_channel_secret', channel_token: 'test_channel_token' }
+  config.line_bot = { channel_secret: "test_channel_secret", channel_token: "test_channel_token" }
 end

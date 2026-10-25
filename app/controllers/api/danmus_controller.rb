@@ -28,7 +28,7 @@ class Api::DanmusController < ApiController
   end
 
   def check_auth_token
-    render json: { error: 'wrong auth_token' }, status: :unauthorized unless @room.auth?(params[:auth_token])
+    render json: { error: "wrong auth_token" }, status: :unauthorized unless @room.auth?(params[:auth_token])
   end
 
   def danmu_params

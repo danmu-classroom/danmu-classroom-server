@@ -71,7 +71,7 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   # Redis
-  config.redis_url = ENV.fetch('REDIS_URL', 'redis://localhost:6379/1')
+  config.redis_url = ENV.fetch("REDIS_URL", "redis://localhost:6379/1")
 
   # Line bot (from encrypted credentials when config/master.key is present)
   config.line_bot = {

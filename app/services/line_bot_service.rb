@@ -8,11 +8,11 @@ class LineBotService
   def initialize(request)
     @request = request
     @body = @request.raw_post
-    @signature = @request.env['HTTP_X_LINE_SIGNATURE'].to_s
+    @signature = @request.env["HTTP_X_LINE_SIGNATURE"].to_s
     @bot = Singletons.instance.line_bot
     @chats = Singletons.instance.line_webhook_parser.parse(body: @body, signature: @signature)
   rescue Line::Bot::V2::WebhookParser::InvalidSignatureError
-    raise 'signature invalid'
+    raise "signature invalid"
   end
 
   def perform
@@ -20,7 +20,7 @@ class LineBotService
       message = bulid_msg_and_react(chat)
       next if message.blank?
 
-      @bot.reply_message(reply_message_request: Messaging::ReplyMessageRequest.new(reply_token: chat.reply_token, messages: [message]))
+      @bot.reply_message(reply_message_request: Messaging::ReplyMessageRequest.new(reply_token: chat.reply_token, messages: [ message ]))
     end
   end
 
@@ -29,20 +29,20 @@ class LineBotService
   def bulid_msg_and_react(chat)
     # write your reply logic here
     uid = chat.source.try(:user_id)
-    sender = Sender.find_or_create_by(uid: uid, provider: 'line')
+    sender = Sender.find_or_create_by(uid: uid, provider: "line")
     case chat
     when Line::Bot::V2::Webhook::MessageEvent
-      text = chat.message.try(:text) || ''
-      return setting_room_key(sender, text) if sender.last_action == 'ask_for_setting_room_key'
+      text = chat.message.try(:text) || ""
+      return setting_room_key(sender, text) if sender.last_action == "ask_for_setting_room_key"
       return no_room_key unless sender.room_key.present?
 
       creating_danmu(sender, text)
     when Line::Bot::V2::Webhook::PostbackEvent
       data = chat.postback.data.to_s
       data = ActionController::Parameters.new(Rack::Utils.parse_nested_query(data))
-      return ask_for_setting_room_key(sender) if data[:action] == 'ask_for_setting_room_key'
+      return ask_for_setting_room_key(sender) if data[:action] == "ask_for_setting_room_key"
 
-      clean_room_key(sender) if data[:action] == 'ask_for_delete_room_key'
+      clean_room_key(sender) if data[:action] == "ask_for_delete_room_key"
     end
   end
 
@@ -63,10 +63,10 @@ class LineBotService
     # nothing
     # return message
     Messaging::TemplateMessage.new(
-      alt_text: 'Set the room key first',
+      alt_text: "Set the room key first",
       template: Messaging::ButtonsTemplate.new(
-        text: '請先告訴我你要去哪間房間嗨',
-        actions: [postback('輸入房號', 'action=ask_for_setting_room_key')]
+        text: "請先告訴我你要去哪間房間嗨",
+        actions: [ postback("輸入房號", "action=ask_for_setting_room_key") ]
       )
     )
   end
@@ -75,17 +75,17 @@ class LineBotService
     # react
     text = if sender.send_danmu(content)
              "成功發送彈幕至 ##{sender.room_key}"
-           else
+    else
              "出錯啦，無法發送彈幕至 ##{sender.room_key}，要不是你房號打錯，就是我程式寫錯（希望是你打錯）"
-           end
+    end
     # return message
     Messaging::TemplateMessage.new(
       alt_text: text,
       template: Messaging::ButtonsTemplate.new(
         text: text,
         actions: [
-          postback('換個房間', 'action=ask_for_setting_room_key'),
-          postback('離開房間', 'action=ask_for_delete_room_key')
+          postback("換個房間", "action=ask_for_setting_room_key"),
+          postback("離開房間", "action=ask_for_delete_room_key")
         ]
       )
     )
@@ -93,9 +93,9 @@ class LineBotService
 
   def ask_for_setting_room_key(sender)
     # react
-    sender.last_action = 'ask_for_setting_room_key'
+    sender.last_action = "ask_for_setting_room_key"
     # return message
-    Messaging::TextMessage.new(text: '輸入房間號碼，不知道房號多少的請看螢幕或是問隔壁（要不然就猜猜看？）')
+    Messaging::TextMessage.new(text: "輸入房間號碼，不知道房號多少的請看螢幕或是問隔壁（要不然就猜猜看？）")
   end
 
   def clean_room_key(sender)

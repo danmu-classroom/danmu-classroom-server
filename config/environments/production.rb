@@ -85,10 +85,10 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # Credentials keep production secrets under `production:` (see config/credentials.yml.example)
-  config.secret_key_base = ENV['SECRET_KEY_BASE'] || Rails.application.credentials.dig(:production, :secret_key_base)
+  config.secret_key_base = ENV["SECRET_KEY_BASE"] || Rails.application.credentials.dig(:production, :secret_key_base)
 
   # Redis
-  config.redis_url = ENV['REDIS_URL'] || Rails.application.credentials.dig(:production, :redis_url)
+  config.redis_url = ENV["REDIS_URL"] || Rails.application.credentials.dig(:production, :redis_url)
 
   # Line bot
   config.line_bot = {
