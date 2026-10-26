@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> **這個 repo 已封存，不再維護。** 彈幕教室已在 Cloudflare 上重寫，伺服器和其他部分都移到 **[danmu-classroom/danmu-classroom](https://github.com/danmu-classroom/danmu-classroom)**。
+
 # Danmu
 
 ## Tech Stack
